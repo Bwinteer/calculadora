@@ -1,9 +1,10 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $num1 = $_POST['num1'];
-    $num2 = $_POST['num2'];
-    $operador = $_POST['operador'];
-    $resultado = '';
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $num1 = floatval($_POST["num1"] ?? 0);
+    $num2 = floatval($_POST["num2"] ?? 0);
+    $operador = $_POST["operador"] ?? '+';
+
+    $resultado = 0;
 
     switch ($operador) {
         case '+':
@@ -16,19 +17,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $resultado = $num1 * $num2;
             break;
         case '/':
-            if ($num2 != 0) {
-                $resultado = $num1 / $num2;
-            } else {
-                $resultado = 'Erro: Divisão por zero';
-            }
+            $resultado = $num2 != 0 ? $num1 / $num2 : "Erro: divisão por zero";
             break;
         default:
-            $resultado = 'Operação inválida';
+            $resultado = "Operador inválido";
     }
 
-    echo "<h2>Resultado: $resultado</h2>";
-    echo '<a href="index.html">Voltar</a>';
-} else {
-    echo "Acesso inválido.";
+    echo $resultado;
 }
 ?>
